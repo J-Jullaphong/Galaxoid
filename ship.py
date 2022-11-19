@@ -1,6 +1,6 @@
 from random import randrange
 from turtle import Turtle
-from bullet import Laser
+from item import Laser
 
 
 class PlayerShip(Turtle):
