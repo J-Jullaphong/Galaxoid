@@ -3,6 +3,7 @@ from turtle import Screen, Turtle, onkey, bye
 from ship import PlayerShip, EnemyShip, BossShip
 from item import Buff
 
+
 class Game:
     def __init__(self, player_name=""):
         self.__player = PlayerShip(player_name)
@@ -41,7 +42,7 @@ class Game:
 
     @wave.setter
     def wave(self, new_wave):
-        self.wave = new_wave
+        self.__wave = new_wave
 
     @property
     def screen(self):
