@@ -1,12 +1,14 @@
 from random import choice, randrange
 from turtle import Screen, Turtle, onkey, bye
 from ship import PlayerShip, EnemyShip, BossShip
-
+from item import Buff
 
 class Game:
     def __init__(self, player_name=""):
         self.__player = PlayerShip(player_name)
         self.__enemy = {}
+        self.__buff = {}
+        self.__wave = 1
         self.__screen = None
 
     @property
@@ -24,6 +26,22 @@ class Game:
     @enemy.setter
     def enemy(self, new_enemy):
         self.__enemy = new_enemy
+
+    @property
+    def buff(self):
+        return self.__buff
+
+    @buff.setter
+    def buff(self, new_buff):
+        self.__buff = new_buff
+
+    @property
+    def wave(self):
+        return self.__wave
+
+    @wave.setter
+    def wave(self, new_wave):
+        self.wave = new_wave
 
     @property
     def screen(self):
@@ -63,11 +81,10 @@ class Game:
         player_score = 0
         player_life = 3
         enemy_turn = 1
-        wave = 1
         while True:
             if not self.player.life:
                 break
-            if player_life > self.player.life:
+            if player_life != self.player.life:
                 life_title.undo()
                 if self.player.life == 1:
                     life_title.color("red")
@@ -78,16 +95,22 @@ class Game:
                 score_title.write(f"Score: {self.player.score}",
                                   font=("Arial", 42, "normal"))
             if all(enemy_ship is None for enemy_ship in
-                   self.enemy.values()) and wave % 10 == 0:
+                   self.enemy.values()) and self.wave % 10 == 0:
                 self.player.shoot_status = False
-                self.boss_spawn(wave)
-                wave += 1
+                self.boss_spawn(self.wave)
+                self.wave += 1
                 self.player.shoot_status = True
             elif all(enemy_ship is None for enemy_ship in self.enemy.values()):
                 self.player.shoot_status = False
-                self.spawn(wave)
-                wave += 1
+                self.spawn(self.wave)
+                self.wave += 1
                 self.player.shoot_status = True
+            if not self.buff:
+                self.buff_spawn()
+            elif self.buff[0].is_buff_collide(self.player):
+                self.buff[0].clear_buff()
+                self.buff[0].heal(self.player)
+                self.buff_spawn()
             if enemy_turn % 20 == 0:
                 choice([enemy_ship for enemy_ship in self.enemy.values()
                         if isinstance(enemy_ship, EnemyShip) or
@@ -107,7 +130,11 @@ class Game:
 
     def boss_spawn(self, wave):
         self.enemy.clear()
-        self.enemy.update({0: BossShip(wave)})
+        self.enemy[0] = BossShip(wave)
+
+    def buff_spawn(self):
+        self.buff.clear()
+        self.buff[0] = Buff()
 
     def show_life(self):
         life_title = Turtle()

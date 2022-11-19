@@ -1,4 +1,5 @@
 from turtle import Turtle
+from random import randrange
 
 
 class Laser(Turtle):
@@ -25,5 +26,29 @@ class Laser(Turtle):
                and abs(self.ycor() - other.ycor()) < 100
 
     def clear_laser(self):
+        self.penup()
+        self.goto(1000, 0)
+
+
+class Buff(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.hideturtle()
+        self.color("yellow")
+        self.speed(0)
+        self.penup()
+        self.shape("circle")
+        self.goto(randrange(-500, 0, 20), randrange(-300, 300, 20))
+        self.showturtle()
+
+    def heal(self, player):
+        player.life += 1
+
+    def is_buff_collide(self, player):
+        return abs(self.xcor() - player.xcor()) < 20 \
+               and abs(self.ycor() - player.ycor()) < 20
+
+    def clear_buff(self):
+        self.hideturtle()
         self.penup()
         self.goto(1000, 0)
