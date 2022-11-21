@@ -89,6 +89,8 @@ class Game:
                 life_title.undo()
                 if self.player.life == 1:
                     life_title.color("red")
+                elif self.player.life != 1:
+                    life_title.color("white")
                 life_title.write(f"Life: {self.player.life}",
                                  font=("Arial", 42, "normal"))
             if player_score < self.player.score:
@@ -121,13 +123,14 @@ class Game:
                 choice([enemy_ship for enemy_ship in self.enemy.values()
                         if isinstance(enemy_ship, EnemyShip) or
                         isinstance(enemy_ship, BossShip)]).shoot(self.player)
+            self.player.enemy_collide(self.enemy)
             self.screen.update()
         bye()
 
     def spawn(self, wave):
         self.enemy.clear()
-        self.enemy.update({index: EnemyShip(randrange(100, 201, 50))
-                           for index in range(wave)})
+        self.enemy.update({index: EnemyShip()
+                           for index in range(wave + 3)})
 
     def boss_spawn(self, wave):
         self.enemy.clear()

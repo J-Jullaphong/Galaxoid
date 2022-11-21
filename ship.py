@@ -94,20 +94,38 @@ class PlayerShip(Turtle):
                 laser.clear()
             self.shoot_status = True
 
+    def is_enemy_collide(self, enemy):
+        return abs(self.xcor() - enemy.xcor()) < 20 \
+               and abs(self.ycor() - enemy.ycor()) < 30
+
+    def enemy_collide(self, enemies):
+        for index, enemy in enemies.items():
+            if isinstance(enemy, EnemyShip) and self.is_enemy_collide(enemy):
+                enemies[index] = None
+                enemy.hideturtle()
+                self.life -= 1
+                return None
+
 
 class EnemyShip(Turtle):
-    def __init__(self, point=0):
+    def __init__(self):
         super().__init__()
-        self.__point = point
+        self.__point = 100
         self.hideturtle()
         self.shapesize(3)
         self.color("orange")
+        self.pencolor("white")
         self.penup()
+        self.speed(0)
         self.goto(700, 0)
         self.setheading(180)
+        self.pendown()
+        self.pensize(15)
         self.showturtle()
+        self.goto(randrange(300, 551, 50), randrange(-300, 301, 50))
+        self.penup()
+        self.clear()
         self.speed(5)
-        self.goto(randrange(300, 601, 50), randrange(-300, 301, 50))
 
     @property
     def point(self):
@@ -138,6 +156,7 @@ class BossShip(Turtle):
         self.penup()
         self.shapesize(25)
         self.color("red")
+        self.pencolor("white")
         self.speed(0)
         self.goto(700, 0)
         self.setheading(180)
