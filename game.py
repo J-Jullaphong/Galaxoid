@@ -81,11 +81,11 @@ class Game:
         self.screen.listen()
         player_score = 0
         player_life = 3
-        enemy_turn = 1
         while True:
             if not self.player.life:
                 break
             if player_life != self.player.life:
+                player_life = self.player.life
                 life_title.undo()
                 if self.player.life == 1:
                     life_title.color("red")
@@ -112,15 +112,15 @@ class Game:
                 self.buff[0].clear_buff()
                 self.buff[0].heal(self.player)
                 self.buff_spawn()
-            if enemy_turn % 20 == 0:
+            enemy_turn = randrange(1, 100)
+            if enemy_turn % 3 == 0:
                 choice([enemy_ship for enemy_ship in self.enemy.values()
                         if isinstance(enemy_ship, EnemyShip) or
                         isinstance(enemy_ship, BossShip)]).move()
-            elif enemy_turn % 30 == 0:
+            elif enemy_turn % 5 == 0:
                 choice([enemy_ship for enemy_ship in self.enemy.values()
                         if isinstance(enemy_ship, EnemyShip) or
                         isinstance(enemy_ship, BossShip)]).shoot(self.player)
-            enemy_turn += 1
             self.screen.update()
         bye()
 

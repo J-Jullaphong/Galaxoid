@@ -43,6 +43,7 @@ def main():
         print("--Leaderboard--")
         user.get_top5()
     elif start_choice == "N":
+        print()
         print("Please Come Back Later")
 
 

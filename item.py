@@ -42,7 +42,8 @@ class Buff(Turtle):
         self.showturtle()
 
     def heal(self, player):
-        player.life += 1
+        if player.life < 5:
+            player.life += 1
 
     def is_buff_collide(self, player):
         return abs(self.xcor() - player.xcor()) < 20 \
