@@ -2,6 +2,7 @@ from random import choice, randrange
 from turtle import Screen, Turtle, onkey, bye
 from ship import PlayerShip, EnemyShip, BossShip
 from item import Buff
+from time import sleep
 
 
 class Game:
@@ -55,14 +56,26 @@ class Game:
     def player_shoot(self):
         self.player.shoot(self.enemy)
 
+    def player_move_up(self):
+        self.player.move_up(self.enemy)
+
+    def player_move_down(self):
+        self.player.move_down(self.enemy)
+
+    def player_move_left(self):
+        self.player.move_left(self.enemy)
+
+    def player_move_right(self):
+        self.player.move_right(self.enemy)
+
     def close_window(self):
         self.player.life = 0
 
-    def key_press(self, ship):
-        onkey(ship.move_up, "Up")
-        onkey(ship.move_down, "Down")
-        onkey(ship.move_left, "Left")
-        onkey(ship.move_right, "Right")
+    def key_press(self):
+        onkey(self.player_move_up, "Up")
+        onkey(self.player_move_down, "Down")
+        onkey(self.player_move_right, "Right")
+        onkey(self.player_move_left, "Left")
         onkey(self.player_shoot, "space")
         onkey(self.close_window, "Escape")
 
@@ -77,12 +90,16 @@ class Game:
         score_title = self.show_score()
         score_title.write(f"Score: {self.player.score}",
                           font=("Arial", 42, "normal"))
-        self.key_press(self.player)
+        self.key_press()
         self.screen.listen()
         player_score = 0
         player_life = 3
         while True:
             if not self.player.life:
+                game_over, game_over_shadow = self.game_over()
+                game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"))
+                game_over.write(f"GAME OVER", font=("Arial", 100, "bold"))
+                sleep(3)
                 break
             if player_life != self.player.life:
                 player_life = self.player.life
@@ -100,12 +117,12 @@ class Game:
             if all(enemy_ship is None for enemy_ship in
                    self.enemy.values()) and self.wave % 10 == 0:
                 self.player.shoot_status = False
-                self.boss_spawn(self.wave)
+                self.boss_spawn()
                 self.wave += 1
                 self.player.shoot_status = True
             elif all(enemy_ship is None for enemy_ship in self.enemy.values()):
                 self.player.shoot_status = False
-                self.spawn(self.wave)
+                self.spawn()
                 self.wave += 1
                 self.player.shoot_status = True
             if not self.buff:
@@ -123,18 +140,17 @@ class Game:
                 choice([enemy_ship for enemy_ship in self.enemy.values()
                         if isinstance(enemy_ship, EnemyShip) or
                         isinstance(enemy_ship, BossShip)]).shoot(self.player)
-            self.player.enemy_collide(self.enemy)
             self.screen.update()
         bye()
 
-    def spawn(self, wave):
+    def spawn(self):
         self.enemy.clear()
         self.enemy.update({index: EnemyShip()
-                           for index in range(wave + 3)})
+                           for index in range(self.wave + 3)})
 
-    def boss_spawn(self, wave):
+    def boss_spawn(self):
         self.enemy.clear()
-        self.enemy[0] = BossShip(wave)
+        self.enemy[0] = BossShip(self.wave)
 
     def buff_spawn(self):
         self.buff.clear()
@@ -155,3 +171,17 @@ class Game:
         score_title.color("white")
         score_title.setpos(350, 300)
         return score_title
+
+    def game_over(self):
+        over = Turtle()
+        over.hideturtle()
+        over.penup()
+        over.color("red")
+        over.backward(300)
+        over_shadow = Turtle()
+        over_shadow.hideturtle()
+        over_shadow.penup()
+        over_shadow.color("white")
+        over_shadow.sety(-8)
+        over_shadow.backward(292)
+        return over, over_shadow

@@ -38,11 +38,17 @@ def main():
         print("--Round Summary--")
         print(f"Player: {user.username}")
         print(f"Score: {main_game.player.score}")
+        print(f"Accuracy: {main_game.player.accuracy:.2f} %")
         print(f"Current Rank: {user.get_rank(user.username)}")
         print()
-        print("--Leaderboard--")
+        print("|------------Leaderboard-------------|")
         user.get_top5()
+        print("|------------------------------------|")
     elif start_choice == "N":
+        print()
+        print("|------------Leaderboard-------------|")
+        user.get_top5()
+        print("|------------------------------------|")
         print()
         print("Please Come Back Later")
 

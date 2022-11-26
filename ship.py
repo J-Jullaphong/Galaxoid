@@ -10,6 +10,8 @@ class PlayerShip(Turtle):
         self.__score = 0
         self.__life = 3
         self.__shoot_status = False
+        self.__shot_count = 0
+        self.__hit_count = 0
         self.pensize(5)
         self.speed(0)
         self.shapesize(3)
@@ -49,21 +51,47 @@ class PlayerShip(Turtle):
     def shoot_status(self, new_status):
         self.__shoot_status = new_status
 
-    def move_up(self):
+    @property
+    def shot_count(self):
+        return self.__shot_count
+
+    @shot_count.setter
+    def shot_count(self, new_shot_count):
+        self.__shot_count = new_shot_count
+
+    @property
+    def hit_count(self):
+        return self.__hit_count
+
+    @hit_count.setter
+    def hit_count(self, new_hit_count):
+        self.__hit_count = new_hit_count
+
+    @property
+    def accuracy(self):
+        if self.shot_count == 0:
+            return 0
+        return (self.hit_count / self.shot_count) * 100
+
+    def move_up(self, enemies):
         if self.ycor() + 10 < 360:
             self.goto(self.xcor(), self.ycor() + 10)
+            self.enemy_collide(enemies)
 
-    def move_down(self):
+    def move_down(self, enemies):
         if self.ycor() - 10 > -360:
             self.goto(self.xcor(), self.ycor() - 10)
+            self.enemy_collide(enemies)
 
-    def move_left(self):
+    def move_left(self, enemies):
         if self.xcor() - 20 > -640:
             self.backward(20)
+            self.enemy_collide(enemies)
 
-    def move_right(self):
+    def move_right(self, enemies):
         if self.xcor() + 20 < 640:
             self.forward(20)
+            self.enemy_collide(enemies)
 
     def add_score(self, enemy):
         enemy.hideturtle()
@@ -72,12 +100,14 @@ class PlayerShip(Turtle):
     def shoot(self, enemies):
         if self.shoot_status:
             self.shoot_status = False
+            self.shot_count += 1
             laser = Laser(self)
             while laser.xcor() < 650:
                 for index, enemy_ship in enemies.items():
                     if isinstance(enemy_ship, EnemyShip) \
                             and laser.is_collide(enemy_ship):
                         self.add_score(enemy_ship)
+                        self.hit_count += 1
                         enemies[index] = None
                         laser.clear_laser()
                         break
@@ -85,6 +115,7 @@ class PlayerShip(Turtle):
                             and laser.is_boss_collide(enemy_ship):
                         laser.clear_laser()
                         enemy_ship.health -= 1
+                        self.hit_count += 1
                         if enemy_ship.health <= 0:
                             self.add_score(enemy_ship)
                             enemies[index] = None
@@ -157,12 +188,16 @@ class BossShip(Turtle):
         self.shapesize(25)
         self.color("red")
         self.pencolor("white")
+        self.pensize(50)
         self.speed(0)
         self.goto(700, 0)
         self.setheading(180)
         self.showturtle()
+        self.pendown()
+        self.goto(randrange(250, 401, 50), randrange(-100, 101, 50))
+        self.clear()
+        self.penup()
         self.speed(5)
-        self.goto(randrange(300, 551, 50), randrange(-100, 101, 50))
 
     @property
     def health(self):
