@@ -92,13 +92,15 @@ class Game:
                           font=("Arial", 42, "normal"))
         self.key_press()
         self.screen.listen()
+        self.player.pendown()
+        self.player.goto(-500, 0)
+        self.player.clear()
+        self.player.penup()
         player_score = 0
         player_life = 3
         while True:
             if not self.player.life:
-                game_over, game_over_shadow = self.game_over()
-                game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"))
-                game_over.write(f"GAME OVER", font=("Arial", 100, "bold"))
+                self.game_over()
                 sleep(3)
                 break
             if player_life != self.player.life:
@@ -106,10 +108,12 @@ class Game:
                 life_title.undo()
                 if self.player.life == 1:
                     life_title.color("red")
+                    life_title.write("!!DANGER!!",
+                                     font=("Arial", 42, "normal"))
                 elif self.player.life != 1:
                     life_title.color("white")
-                life_title.write(f"Life: {self.player.life}",
-                                 font=("Arial", 42, "normal"))
+                    life_title.write(f"Life: {self.player.life}",
+                                     font=("Arial", 42, "normal"))
             if player_score < self.player.score:
                 score_title.undo()
                 score_title.write(f"Score: {self.player.score}",
@@ -157,7 +161,7 @@ class Game:
         self.buff[0] = Buff()
 
     def show_life(self):
-        life_title = Turtle()
+        life_title = Turtle(visible=False)
         life_title.hideturtle()
         life_title.penup()
         life_title.color("white")
@@ -165,7 +169,7 @@ class Game:
         return life_title
 
     def show_score(self):
-        score_title = Turtle()
+        score_title = Turtle(visible=False)
         score_title.hideturtle()
         score_title.penup()
         score_title.color("white")
@@ -173,15 +177,16 @@ class Game:
         return score_title
 
     def game_over(self):
-        over = Turtle()
-        over.hideturtle()
-        over.penup()
-        over.color("red")
-        over.backward(300)
-        over_shadow = Turtle()
-        over_shadow.hideturtle()
-        over_shadow.penup()
-        over_shadow.color("white")
-        over_shadow.sety(-8)
-        over_shadow.backward(292)
-        return over, over_shadow
+        game_over = Turtle(visible=False)
+        game_over.hideturtle()
+        game_over.penup()
+        game_over.color("red")
+        game_over.backward(300)
+        game_over_shadow = Turtle(visible=False)
+        game_over_shadow.hideturtle()
+        game_over_shadow.penup()
+        game_over_shadow.color("white")
+        game_over_shadow.sety(-8)
+        game_over_shadow.backward(292)
+        game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"))
+        game_over.write(f"GAME OVER", font=("Arial", 100, "bold"))

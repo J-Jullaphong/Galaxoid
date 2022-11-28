@@ -5,19 +5,20 @@ from item import Laser
 
 class PlayerShip(Turtle):
     def __init__(self, name=""):
-        super().__init__()
+        super().__init__(visible=False)
         self.__name = name
         self.__score = 0
         self.__life = 3
         self.__shoot_status = False
         self.__shot_count = 0
         self.__hit_count = 0
-        self.pensize(5)
+        self.pensize(15)
         self.speed(0)
         self.shapesize(3)
         self.color("white")
         self.penup()
-        self.goto(x=-600, y=0)
+        self.goto(-700, randrange(-100, 100))
+        self.showturtle()
 
     @property
     def name(self):
@@ -140,9 +141,8 @@ class PlayerShip(Turtle):
 
 class EnemyShip(Turtle):
     def __init__(self):
-        super().__init__()
+        super().__init__(visible=False)
         self.__point = 100
-        self.hideturtle()
         self.shapesize(3)
         self.color("orange")
         self.pencolor("white")
@@ -153,7 +153,7 @@ class EnemyShip(Turtle):
         self.pendown()
         self.pensize(15)
         self.showturtle()
-        self.goto(randrange(300, 551, 50), randrange(-300, 301, 50))
+        self.goto(randrange(300, 551, 20), randrange(-300, 301, 20))
         self.penup()
         self.clear()
         self.speed(5)
@@ -180,10 +180,9 @@ class EnemyShip(Turtle):
 
 class BossShip(Turtle):
     def __init__(self, health=0):
-        super().__init__()
+        super().__init__(visible=False)
         self.__health = health
         self.__point = 5000
-        self.hideturtle()
         self.penup()
         self.shapesize(25)
         self.color("red")

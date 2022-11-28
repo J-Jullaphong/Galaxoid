@@ -4,7 +4,7 @@ from random import randrange
 
 class Laser(Turtle):
     def __init__(self, ship):
-        super().__init__()
+        super().__init__(visible=False)
         self.hideturtle()
         self.color("red")
         self.speed(0)
@@ -32,8 +32,7 @@ class Laser(Turtle):
 
 class Buff(Turtle):
     def __init__(self):
-        super().__init__()
-        self.hideturtle()
+        super().__init__(visible=False)
         self.color("yellow")
         self.speed(0)
         self.penup()

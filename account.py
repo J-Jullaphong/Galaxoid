@@ -128,13 +128,13 @@ class Account:
             rank = dict(sorted(unsorted_rank.items(), key=lambda item: item[1],
                                reverse=True))
             player_rank = [player for player in rank.keys()]
-            print("|  Rank  |    Name    |  High Score  |")
+            print("|  Rank  |    Pilot    |  High Score  |")
             for index in range(5):
                 try:
                     player = player_rank[index]
-                    print(f"|{index + 1:^8}|{player:^12}|{rank[player]:^12}  |")
+                    print(f"|{index + 1:^8}|{player:^13}|{rank[player]:^12}  |")
                 except IndexError:
-                    print(f"|{index + 1:^8}|" + " " * 12 + "|" + " " * 14 + "|")
+                    print(f"|{index + 1:^8}|" + " " * 13 + "|" + " " * 14 + "|")
         except FileNotFoundError:
             print("Account Data File Not Found")
             print()
