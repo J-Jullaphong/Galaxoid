@@ -5,9 +5,9 @@ from time import sleep
 story_lines = ["A long time yet to come in a galaxy very very close...",
                "Galaxoid, A Space Terrorist has spread its power around "
                "the galaxy.",
-               "It is a dark time for the Rebellion. "
+               "It is a dark time for the Empire. "
                "An Endless War has begun.",
-               "It is your job to end this endless war"]
+               "It is your job to end this war"]
 
 
 def main(story):
@@ -46,9 +46,10 @@ def main(story):
         print("Press Arrow keys to Move.")
         print("Press Space bar to Shoot.")
         print("Press ESC when you can't take it anymore.")
-        ready_choice = input("Are you ready? (Y/N): ").upper()
-        while ready_choice != "Y" and ready_choice != "N":
-            ready_choice = input("Are you ready? (Y/N): ").upper()
+        print()
+        ready_choice = input("Are you ready? (Y): ").upper()
+        while ready_choice != "Y":
+            ready_choice = input("Are you ready? (Y): ").upper()
         main_game = Game(user.username)
         main_game.play_game()
         user.write_score(user.username, main_game.player.score)

@@ -4,6 +4,12 @@ from ship import PlayerShip, EnemyShip, BossShip
 from item import Buff
 from time import sleep
 
+story_lines = ["Galaxoid, A Space Terrorist has spread",
+               "its power around the galaxy.",
+               "It is a dark time for the Empire. ",
+               "An Endless War has begun.",
+               "It is your job to end this war"]
+
 
 class Game:
     def __init__(self, player_name=""):
@@ -84,6 +90,8 @@ class Game:
         self.screen.setup(1280, 720)
         self.screen.bgpic("space_bg.gif")
         self.screen.title("Galaxoid")
+        self.title()
+        self.story(story_lines)
         life_title = self.show_life()
         life_title.write(f"Life: {self.player.life}",
                          font=("Arial", 42, "normal"))
@@ -160,9 +168,46 @@ class Game:
         self.buff.clear()
         self.buff[0] = Buff()
 
+    def title(self):
+        title_turtle = Turtle(visible=False)
+        title_turtle.color("#FFE81F")
+        title_turtle.penup()
+        title_turtle.sety(-100)
+        title_turtle.write("GALAXOID", font=("Arial", 200, "bold"),
+                           align="center")
+        sleep(5)
+        title_turtle.clear()
+
+    def story(self, story):
+        story_turtle = Turtle(visible=False)
+        story_turtle.color("#43A5CF")
+        story_turtle.penup()
+        story_turtle.write("A long time yet to come in a galaxy "
+                           "very very close...", font=("Arial", 42, "normal"),
+                           align="center")
+        sleep(3)
+        story_turtle.color("#FFE81F")
+        story_turtle.sety(50)
+        for line in range(len(story)):
+            story_turtle.clear()
+            try:
+                story_turtle.write(story[line], font=("Arial", 42, "normal"),
+                                   align="center")
+                story_turtle.sety(0)
+                story_turtle.write(story[line+1], font=("Arial", 42, "normal"),
+                                   align="center")
+                story_turtle.sety(-50)
+                story_turtle.write(story[line+2], font=("Arial", 42, "normal"),
+                                   align="center")
+                story_turtle.sety(50)
+                sleep(4)
+            except IndexError:
+                sleep(2)
+                story_turtle.clear()
+                break
+
     def show_life(self):
         life_title = Turtle(visible=False)
-        life_title.hideturtle()
         life_title.penup()
         life_title.color("white")
         life_title.setpos(-550, 300)
@@ -170,7 +215,6 @@ class Game:
 
     def show_score(self):
         score_title = Turtle(visible=False)
-        score_title.hideturtle()
         score_title.penup()
         score_title.color("white")
         score_title.setpos(350, 300)
@@ -178,12 +222,10 @@ class Game:
 
     def game_over(self):
         game_over = Turtle(visible=False)
-        game_over.hideturtle()
         game_over.penup()
         game_over.color("red")
         game_over.backward(300)
         game_over_shadow = Turtle(visible=False)
-        game_over_shadow.hideturtle()
         game_over_shadow.penup()
         game_over_shadow.color("white")
         game_over_shadow.sety(-8)

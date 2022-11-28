@@ -166,6 +166,7 @@ class EnemyShip(Turtle):
         self.goto(randrange(-300, 600), randrange(-300, 300))
 
     def shoot(self, player):
+        player.shoot_status = False
         enemy_laser = Laser(self)
         enemy_laser.color("green")
         while enemy_laser.xcor() > -650:
@@ -176,6 +177,7 @@ class EnemyShip(Turtle):
                 enemy_laser.goto(-1000, 0)
             enemy_laser.backward(100)
             enemy_laser.clear()
+        player.shoot_status = True
 
 
 class BossShip(Turtle):
