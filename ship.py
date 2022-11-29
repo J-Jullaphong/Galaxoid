@@ -1,6 +1,7 @@
 from random import randrange
 from turtle import Turtle
 from item import Laser
+from sys import platform
 
 
 class PlayerShip(Turtle):
@@ -14,8 +15,10 @@ class PlayerShip(Turtle):
         self.__hit_count = 0
         self.shape("images/player_ship.gif")
         self.pensize(15)
-        self.speed(5)
-        self.shapesize(3)
+        if platform == "win32":
+            self.speed(5)
+        elif platform == "darwin":
+            self.speed(0)
         self.color("#BA0000")
         self.penup()
         self.goto(-700, randrange(-100, 100))
@@ -147,7 +150,10 @@ class EnemyShip(Turtle):
         self.shape("images/enemy_ship.gif")
         self.color("#4800C9")
         self.penup()
-        self.speed(5)
+        if platform == "win32":
+            self.speed(5)
+        elif platform == "darwin":
+            self.speed(0)
         self.goto(700, 0)
         self.setheading(180)
         self.pendown()
@@ -156,7 +162,10 @@ class EnemyShip(Turtle):
         self.goto(randrange(300, 551, 20), randrange(-300, 301, 20))
         self.penup()
         self.clear()
-        self.speed(1)
+        if platform == "win32":
+            self.speed(1)
+        elif platform == "darwin":
+            self.speed(5)
 
     @property
     def point(self):
@@ -187,7 +196,10 @@ class BossShip(Turtle):
         self.shape("images/boss_ship.gif")
         self.color("#4800C9")
         self.pensize(50)
-        self.speed(5)
+        if platform == "win32":
+            self.speed(5)
+        elif platform == "darwin":
+            self.speed(0)
         self.goto(700, 0)
         self.setheading(180)
         self.showturtle()
@@ -195,7 +207,10 @@ class BossShip(Turtle):
         self.goto(randrange(250, 401, 50), randrange(-100, 101, 50))
         self.clear()
         self.penup()
-        self.speed(1)
+        if platform == "win32":
+            self.speed(1)
+        elif platform == "darwin":
+            self.speed(5)
 
     @property
     def health(self):

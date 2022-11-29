@@ -1,5 +1,6 @@
 from turtle import Turtle
 from random import randrange
+from sys import platform
 
 
 class Laser(Turtle):
@@ -7,7 +8,10 @@ class Laser(Turtle):
         super().__init__(visible=False)
         self.hideturtle()
         self.color("red")
-        self.speed(5)
+        if platform == "win32":
+            self.speed(5)
+        elif platform == "darwin":
+            self.speed(0)
         self.penup()
         self.pensize(10)
         self.goto(ship.pos())

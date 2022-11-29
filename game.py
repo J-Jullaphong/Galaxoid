@@ -19,7 +19,7 @@ class Game:
         self.__player = PlayerShip(player_name)
         self.__enemy = {}
         self.__buff = {}
-        self.__wave = 10
+        self.__wave = 1
         self.__screen = None
 
     @property
