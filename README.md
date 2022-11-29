@@ -7,7 +7,7 @@ This Game is an ***Endless Space Shooter Game***. It is account-based system, wh
 you can sign up or log in to play and store your high score.
 
 ![Galaxoid](images/console_screenshot_1.png)
-![Galaxoid](images/console_screen_shot_2.png)
+![Galaxoid](images/console_screenshot_2.png)
 
 ### How to use and play? ###
 1. Sign Up or Log in with username and password.
