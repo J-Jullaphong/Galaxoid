@@ -5,9 +5,9 @@ from time import sleep
 story_lines = ["A long time yet to come in a galaxy very very close...",
                "Galaxoid, A Space Terrorist has spread its power around "
                "the galaxy.",
-               "It is a dark time for the Empire. "
+               "It is a dark time for the Empire."
                "An Endless War has begun.",
-               "It is your job to end this war"]
+               "Your job is to end this war."]
 
 
 def main(story):
@@ -21,11 +21,13 @@ def main(story):
             if menu == 1:
                 print()
                 user.signup()
-                print(f"Welcome {user.username}.")
+                if user.username != "":
+                    print(f"Welcome {user.username}.")
             elif menu == 2:
                 print()
                 user.login()
-                print(f"Welcome back, {user.username}.")
+                if user.username != "":
+                    print(f"Welcome back, {user.username}.")
             else:
                 print("Please Input The Correct Choice")
                 print()
@@ -45,7 +47,10 @@ def main(story):
         print("--How to play--")
         print("Press Arrow keys to Move.")
         print("Press Space bar to Shoot.")
-        print("Press ESC when you can't take it anymore.")
+        print("Press ESC to Quit.")
+        print()
+        print("Yellow Orb can be obtained to increase your life(<=5).")
+        print("Enemies will come endlessly, Be prepared.")
         print()
         ready_choice = input("Are you ready? (Y): ").upper()
         while ready_choice != "Y":

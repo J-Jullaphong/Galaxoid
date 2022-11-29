@@ -1,22 +1,25 @@
 from random import choice, randrange
-from turtle import Screen, Turtle, onkey, bye
+from turtle import Screen, Turtle, onkey, bye, register_shape
 from ship import PlayerShip, EnemyShip, BossShip
 from item import Buff
 from time import sleep
 
 story_lines = ["Galaxoid, A Space Terrorist has spread",
                "its power around the galaxy.",
-               "It is a dark time for the Empire. ",
+               "It is a dark time for the Empire.",
                "An Endless War has begun.",
-               "It is your job to end this war"]
+               "Your job is to end this war."]
 
 
 class Game:
     def __init__(self, player_name=""):
+        register_shape("images/enemy_ship.gif")
+        register_shape("images/player_ship.gif")
+        register_shape("images/boss_ship.gif")
         self.__player = PlayerShip(player_name)
         self.__enemy = {}
         self.__buff = {}
-        self.__wave = 1
+        self.__wave = 10
         self.__screen = None
 
     @property
@@ -88,7 +91,7 @@ class Game:
     def play_game(self):
         self.screen = Screen()
         self.screen.setup(1280, 720)
-        self.screen.bgpic("space_bg.gif")
+        self.screen.bgpic("images/space_bg.gif")
         self.screen.title("Galaxoid")
         self.title()
         self.story(story_lines)
@@ -224,11 +227,10 @@ class Game:
         game_over = Turtle(visible=False)
         game_over.penup()
         game_over.color("red")
-        game_over.backward(300)
         game_over_shadow = Turtle(visible=False)
         game_over_shadow.penup()
         game_over_shadow.color("white")
         game_over_shadow.sety(-8)
-        game_over_shadow.backward(292)
-        game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"))
-        game_over.write(f"GAME OVER", font=("Arial", 100, "bold"))
+        game_over_shadow.forward(8)
+        game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"), align="center")
+        game_over.write(f"GAME OVER", font=("Arial", 100, "bold"), align="center")

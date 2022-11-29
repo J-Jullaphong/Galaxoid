@@ -12,10 +12,11 @@ class PlayerShip(Turtle):
         self.__shoot_status = False
         self.__shot_count = 0
         self.__hit_count = 0
+        self.shape("images/player_ship.gif")
         self.pensize(15)
-        self.speed(0)
+        self.speed(5)
         self.shapesize(3)
-        self.color("white")
+        self.color("#BA0000")
         self.penup()
         self.goto(-700, randrange(-100, 100))
         self.showturtle()
@@ -143,11 +144,10 @@ class EnemyShip(Turtle):
     def __init__(self):
         super().__init__(visible=False)
         self.__point = 100
-        self.shapesize(3)
-        self.color("orange")
-        self.pencolor("white")
+        self.shape("images/enemy_ship.gif")
+        self.color("#4800C9")
         self.penup()
-        self.speed(0)
+        self.speed(5)
         self.goto(700, 0)
         self.setheading(180)
         self.pendown()
@@ -156,7 +156,7 @@ class EnemyShip(Turtle):
         self.goto(randrange(300, 551, 20), randrange(-300, 301, 20))
         self.penup()
         self.clear()
-        self.speed(5)
+        self.speed(1)
 
     @property
     def point(self):
@@ -166,9 +166,8 @@ class EnemyShip(Turtle):
         self.goto(randrange(-300, 600), randrange(-300, 300))
 
     def shoot(self, player):
-        player.shoot_status = False
         enemy_laser = Laser(self)
-        enemy_laser.color("green")
+        enemy_laser.color("#29FF11")
         while enemy_laser.xcor() > -650:
             if isinstance(player, PlayerShip) \
                     and enemy_laser.is_collide(player):
@@ -177,7 +176,6 @@ class EnemyShip(Turtle):
                 enemy_laser.goto(-1000, 0)
             enemy_laser.backward(100)
             enemy_laser.clear()
-        player.shoot_status = True
 
 
 class BossShip(Turtle):
@@ -186,11 +184,10 @@ class BossShip(Turtle):
         self.__health = health
         self.__point = 5000
         self.penup()
-        self.shapesize(25)
-        self.color("red")
-        self.pencolor("white")
+        self.shape("images/boss_ship.gif")
+        self.color("#4800C9")
         self.pensize(50)
-        self.speed(0)
+        self.speed(5)
         self.goto(700, 0)
         self.setheading(180)
         self.showturtle()
@@ -198,7 +195,7 @@ class BossShip(Turtle):
         self.goto(randrange(250, 401, 50), randrange(-100, 101, 50))
         self.clear()
         self.penup()
-        self.speed(5)
+        self.speed(1)
 
     @property
     def health(self):
@@ -217,7 +214,7 @@ class BossShip(Turtle):
 
     def shoot(self, player):
         enemy_laser = Laser(self)
-        enemy_laser.color("blue")
+        enemy_laser.color("#29FF11")
         enemy_laser.pensize(150)
         while enemy_laser.xcor() > -650:
             if isinstance(player, PlayerShip) \

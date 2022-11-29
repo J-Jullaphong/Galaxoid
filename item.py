@@ -7,7 +7,7 @@ class Laser(Turtle):
         super().__init__(visible=False)
         self.hideturtle()
         self.color("red")
-        self.speed(0)
+        self.speed(5)
         self.penup()
         self.pensize(10)
         self.goto(ship.pos())
