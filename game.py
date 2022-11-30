@@ -13,6 +13,7 @@ story_lines = ["Galaxoid, A Space Terrorist has spread",
 
 class Game:
     def __init__(self, player_name=""):
+        """ Setting up game """
         register_shape("images/enemy_ship.gif")
         register_shape("images/player_ship.gif")
         register_shape("images/boss_ship.gif")
@@ -24,6 +25,7 @@ class Game:
 
     @property
     def player(self):
+        """ Player property represent PlayerShip"""
         return self.__player
 
     @player.setter
@@ -32,55 +34,70 @@ class Game:
 
     @property
     def enemy(self):
+        """ Enemy property represents Dictionary of EnemyShip(s) """
         return self.__enemy
 
     @enemy.setter
     def enemy(self, new_enemy):
+        """Sets the Dictionary of Enemy """
         self.__enemy = new_enemy
 
     @property
     def buff(self):
+        """ Buff property represents Dictionary of Buff """
         return self.__buff
 
     @buff.setter
     def buff(self, new_buff):
+        """Sets the Dictionary of Buff """
         self.__buff = new_buff
 
     @property
     def wave(self):
+        """ Wave property represents Wave of the game """
         return self.__wave
 
     @wave.setter
     def wave(self, new_wave):
+        """Sets the wave of the game"""
         self.__wave = new_wave
 
     @property
     def screen(self):
+        """ Screen property represents Screen of the game """
         return self.__screen
 
     @screen.setter
     def screen(self, new_screen):
+        """Sets the screen of the game"""
         self.__screen = new_screen
 
     def player_shoot(self):
+        """ Add Enemy Argument to PlayerShip.shoot() """
         self.player.shoot(self.enemy)
 
     def player_move_up(self):
+        """ Add Enemy Argument to PlayerShip.move_up() """
         self.player.move_up(self.enemy)
 
     def player_move_down(self):
+        """ Add Enemy Argument to PlayerShip.move_down() """
         self.player.move_down(self.enemy)
 
     def player_move_left(self):
+        """ Add Enemy Argument to PlayerShip.move_left() """
         self.player.move_left(self.enemy)
 
     def player_move_right(self):
+        """ Add Enemy Argument to PlayerShip.move_right() """
         self.player.move_right(self.enemy)
 
     def close_window(self):
+        """ Set Player's life to 0 to close the game """
         self.player.life = 0
 
     def key_press(self):
+        """ Receive Player's Key Pressing """
         onkey(self.player_move_up, "Up")
         onkey(self.player_move_down, "Down")
         onkey(self.player_move_right, "Right")
@@ -89,6 +106,7 @@ class Game:
         onkey(self.close_window, "Escape")
 
     def play_game(self):
+        """ Start, run, and manage the game """
         self.screen = Screen()
         self.screen.setup(1280, 720)
         self.screen.bgpic("images/space_bg.gif")
@@ -110,7 +128,7 @@ class Game:
         player_score = 0
         player_life = 3
         while True:
-            if not self.player.life:
+            if self.player.life <= 0:
                 self.game_over()
                 sleep(3)
                 break
@@ -159,19 +177,23 @@ class Game:
         bye()
 
     def spawn(self):
+        """ Spawn EnemyShip(s) into the game """
         self.enemy.clear()
         self.enemy.update({index: EnemyShip()
                            for index in range(self.wave + 3)})
 
     def boss_spawn(self):
+        """ Spawn BossShip into the game """
         self.enemy.clear()
         self.enemy[0] = BossShip(self.wave)
 
     def buff_spawn(self):
+        """ Spawn Buff into the game """
         self.buff.clear()
         self.buff[0] = Buff()
 
     def title(self):
+        """ Display Game's Title """
         title_turtle = Turtle(visible=False)
         title_turtle.color("#FFE81F")
         title_turtle.penup()
@@ -182,6 +204,7 @@ class Game:
         title_turtle.clear()
 
     def story(self, story):
+        """ Display Game's Story """
         story_turtle = Turtle(visible=False)
         story_turtle.color("#43A5CF")
         story_turtle.penup()
@@ -210,6 +233,7 @@ class Game:
                 break
 
     def show_life(self):
+        """ Display Player's Life """
         life_title = Turtle(visible=False)
         life_title.penup()
         life_title.color("white")
@@ -217,6 +241,7 @@ class Game:
         return life_title
 
     def show_score(self):
+        """ Display Player's Score """
         score_title = Turtle(visible=False)
         score_title.penup()
         score_title.color("white")
@@ -224,6 +249,7 @@ class Game:
         return score_title
 
     def game_over(self):
+        """ Display Game Over """
         game_over = Turtle(visible=False)
         game_over.penup()
         game_over.color("red")

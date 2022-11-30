@@ -4,17 +4,21 @@ from json import dump, load
 
 class Account:
     def __init__(self):
+        """ Create User Account """
         self.__username = ""
 
     @property
     def username(self):
+        """ Username Property represents Username of the account """
         return self.__username
 
     @username.setter
     def username(self, new_username):
+        """ Sets username of the account """
         self.__username = new_username
 
     def signup(self):
+        """ Register User Account and Save into accounts.json file """
         try:
             with open("accounts.json", "r") as account_data:
                 accounts = load(account_data)
@@ -59,6 +63,7 @@ class Account:
             self.signup()
 
     def login(self):
+        """ Let user log in with existing account in accounts.json file """
         try:
             with open("accounts.json", "r") as account_data:
                 accounts = load(account_data)
@@ -92,6 +97,7 @@ class Account:
             print()
 
     def write_score(self, name, score):
+        """ Save User's score into accounts.json file """
         try:
             with open("accounts.json", "r") as account_data:
                 accounts = load(account_data)
@@ -106,6 +112,7 @@ class Account:
             print()
 
     def get_rank(self, name):
+        """ Receive Player's current rank from accounts.json file """
         try:
             with open("accounts.json", "r") as account_data:
                 accounts = load(account_data)
@@ -120,6 +127,7 @@ class Account:
             print()
 
     def get_top5(self):
+        """ Receive Current Top 5 players from accounts.json file """
         try:
             with open("accounts.json", "r") as account_data:
                 accounts = load(account_data)
