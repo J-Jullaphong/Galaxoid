@@ -40,8 +40,10 @@ There are **7** classes in this Program.
 * **Buff**: This class is used for create Buff Sprite with turtle. As it collides with PlayerShip, it will add life/score to PlayerShip.
 * **Game**: This class is used for controlling the main game by integrating PlayerShip, EnemyShip, BossShip, Laser, and Buff classes together.
 
+![Galaxoid UML Diagram](images/Galaxoid_UML.png)
+
 ### Code Structure ###
-* [main_game.py](main_game.py): Run Main Program.
+* [main.py](main.py): Run Main Program.
 * [game.py](game.py): Contains Game Class.
 * [ship.py](ship.py): Contains PlayerShip, EnemyClass, and BossShip Classes.
 * [item.py](item.py): Contains Laser, and Buff Classes.

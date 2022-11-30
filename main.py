@@ -5,12 +5,13 @@ from time import sleep
 story_lines = ["A long time yet to come in a galaxy very very close...",
                "Galaxoid, A Space Terrorist has spread its power around "
                "the galaxy.",
-               "It is a dark time for the Empire."
+               "It is a dark time for the Empire.",
                "An Endless War has begun.",
                "Your job is to end this war."]
 
 
 def main(story):
+    """ Run Main program """
     while True:
         print("Please Sign up or Log in to play the game.")
         print("1. Sign up")
