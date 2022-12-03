@@ -6,8 +6,8 @@ It is inspired by Star Wars, and G-Darius.
 This Game is an ***Endless Space Shooter Game***. It is account-based system, which
 you can sign up or log in to play and store your high score.
 
-![Galaxoid](images/console_screenshot_1.png)
-![Galaxoid](images/console_screenshot_2.png)
+![Galaxoid Console Screen](images/console_screenshot_1.png)
+![Galaxoid Console Screen](images/console_screenshot_2.png)
 
 ### How to use and play? ###
 1. Sign Up or Log in with username and password.
@@ -20,7 +20,7 @@ you can sign up or log in to play and store your high score.
 5. Round Summary will be showed up with Score, Accuracy, and Current Rank.
 6. The Current **Top 5** Leaderboard will be showed up.
 
-![Galaxoid](images/game_screenshot.png)
+![Galaxoid Turtle Screen](images/game_screenshot.png)
 
 ### Program's Requirement ###
 There are **5** Python Modules & Libraries required in this program.
