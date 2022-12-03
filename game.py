@@ -13,7 +13,10 @@ story_lines = ["Galaxoid, A Space Terrorist has spread",
 
 class Game:
     def __init__(self, player_name=""):
-        """ Setting up game """
+        """ Setting up game with player, enemy, buff, wave, and screen
+        attributes
+        """
+        # Register shapes into the game
         register_shape("images/enemy_ship.gif")
         register_shape("images/player_ship.gif")
         register_shape("images/boss_ship.gif")
@@ -107,12 +110,15 @@ class Game:
 
     def play_game(self):
         """ Start, run, and manage the game """
+        # Sets the screen up
         self.screen = Screen()
         self.screen.setup(1280, 720)
         self.screen.bgpic("images/space_bg.gif")
         self.screen.title("Galaxoid")
+        # Display game's title and story
         self.title()
         self.story(story_lines)
+        # Create life-board and scoreboard
         life_title = self.show_life()
         life_title.write(f"Life: {self.player.life}",
                          font=("Arial", 42, "normal"))
@@ -128,10 +134,11 @@ class Game:
         player_score = 0
         player_life = 3
         while True:
+            # Check if player life run out
             if self.player.life <= 0:
                 self.game_over()
-                sleep(3)
                 break
+            # Check current player's life to update the life-board
             if player_life != self.player.life:
                 player_life = self.player.life
                 life_title.undo()
@@ -143,10 +150,13 @@ class Game:
                     life_title.color("white")
                     life_title.write(f"Life: {self.player.life}",
                                      font=("Arial", 42, "normal"))
+            # Check current player's score to update the scoreboard
             if player_score < self.player.score:
                 score_title.undo()
                 score_title.write(f"Score: {self.player.score}",
                                   font=("Arial", 42, "normal"))
+            # Check if there are no more Hostile ships in the screen
+            # and spawn EnemyShip or BossShip according to game's wave
             if all(enemy_ship is None for enemy_ship in
                    self.enemy.values()) and self.wave % 10 == 0:
                 self.player.shoot_status = False
@@ -158,12 +168,15 @@ class Game:
                 self.spawn()
                 self.wave += 1
                 self.player.shoot_status = True
+            # Check if buff is existed in the screen
             if not self.buff:
                 self.buff_spawn()
+            # Check if the player get buff and apply buff effect to the player
             elif self.buff[0].is_buff_collide(self.player):
                 self.buff[0].clear_buff()
                 self.buff[0].heal(self.player)
                 self.buff_spawn()
+            # Random number to determine what Hostile ships do in each turn
             enemy_turn = randrange(1, 100)
             if enemy_turn % 3 == 0:
                 choice([enemy_ship for enemy_ship in self.enemy.values()
@@ -174,6 +187,7 @@ class Game:
                         if isinstance(enemy_ship, EnemyShip) or
                         isinstance(enemy_ship, BossShip)]).shoot(self.player)
             self.screen.update()
+        # Close the game screen
         bye()
 
     def spawn(self):
@@ -260,3 +274,4 @@ class Game:
         game_over_shadow.forward(8)
         game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"), align="center")
         game_over.write(f"GAME OVER", font=("Arial", 100, "bold"), align="center")
+        sleep(3)

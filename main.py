@@ -17,26 +17,22 @@ def main(story):
         print("1. Sign up")
         print("2. Log in")
         user = Account()
-        try:
-            menu = int(input("Enter your Choice: "))
-            if menu == 1:
-                print()
-                user.signup()
-                if user.username != "":
-                    print(f"Welcome {user.username}.")
-            elif menu == 2:
-                print()
-                user.login()
-                if user.username != "":
-                    print(f"Welcome back, {user.username}.")
-            else:
-                print("Please Input The Correct Choice")
-                print()
-        except ValueError:
+        menu = input("Enter your Choice: ")
+        print()
+        if menu == "1":
+            user.signup()
+            if user.username != "":
+                print(f"Welcome {user.username}.")
+        elif menu == "2":
+            user.login()
+            if user.username != "":
+                print(f"Welcome back, {user.username}.")
+        else:
             print("Please Input The Correct Choice")
             print()
         if user.username != "":
             break
+    # Print out story
     for line in story:
         print(line)
         sleep(2)
@@ -56,8 +52,10 @@ def main(story):
         ready_choice = input("Are you ready? (Y): ").upper()
         while ready_choice != "Y":
             ready_choice = input("Are you ready? (Y): ").upper()
+        # Start the game
         main_game = Game(user.username)
         main_game.play_game()
+        # Record user high score
         user.write_score(user.username, main_game.player.score)
         print()
         print("--Round Summary--")

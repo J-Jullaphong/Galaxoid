@@ -6,7 +6,9 @@ from sys import platform
 
 class PlayerShip(Turtle):
     def __init__(self, name=""):
-        """ Create Player's Ship Sprite with name, score, life, etc. """
+        """ Create Player's Ship Sprite with name, score, life, shoot_status,
+        shot_count, and hit_count attributes
+        """
         super().__init__(visible=False)
         self.__name = name
         self.__score = 0
@@ -16,6 +18,7 @@ class PlayerShip(Turtle):
         self.__hit_count = 0
         self.shape("images/player_ship.gif")
         self.pensize(15)
+        # Check user's OS to set speed
         if platform == "win32":
             self.speed(5)
         elif platform == "darwin":
@@ -129,6 +132,7 @@ class PlayerShip(Turtle):
             laser = Laser(self)
             while laser.xcor() < 650:
                 for index, enemy_ship in enemies.items():
+                    # Check Collision with EnemyShip
                     if isinstance(enemy_ship, EnemyShip) \
                             and laser.is_collide(enemy_ship):
                         self.add_score(enemy_ship)
@@ -136,6 +140,7 @@ class PlayerShip(Turtle):
                         enemies[index] = None
                         laser.clear_laser()
                         break
+                    # Check Collision with BossShip
                     elif isinstance(enemy_ship, BossShip) \
                             and laser.is_boss_collide(enemy_ship):
                         laser.clear_laser()
@@ -167,12 +172,13 @@ class PlayerShip(Turtle):
 
 class EnemyShip(Turtle):
     def __init__(self):
-        """ Create Enemy's Ship Sprite with point """
+        """ Create Enemy's Ship Sprite with point attribute """
         super().__init__(visible=False)
         self.__point = 100
         self.shape("images/enemy_ship.gif")
         self.color("#4800C9")
         self.penup()
+        # Check user's OS to set speed
         if platform == "win32":
             self.speed(5)
         elif platform == "darwin":
@@ -215,7 +221,7 @@ class EnemyShip(Turtle):
 
 class BossShip(Turtle):
     def __init__(self, health=0):
-        """ Create Boss's Ship Sprite with health, and point """
+        """ Create Boss's Ship Sprite with health, and point attributes """
         super().__init__(visible=False)
         self.__health = health
         self.__point = 5000
@@ -223,6 +229,7 @@ class BossShip(Turtle):
         self.shape("images/boss_ship.gif")
         self.color("#4800C9")
         self.pensize(50)
+        # Check user's OS to set speed
         if platform == "win32":
             self.speed(5)
         elif platform == "darwin":
@@ -234,6 +241,7 @@ class BossShip(Turtle):
         self.goto(randrange(250, 401, 50), randrange(-100, 101, 50))
         self.clear()
         self.penup()
+        # Check user's OS to set speed
         if platform == "win32":
             self.speed(1)
         elif platform == "darwin":

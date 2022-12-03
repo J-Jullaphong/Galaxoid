@@ -9,6 +9,7 @@ class Laser(Turtle):
         super().__init__(visible=False)
         self.hideturtle()
         self.color("red")
+        # Check user's OS to set speed
         if platform == "win32":
             self.speed(5)
         elif platform == "darwin":
@@ -41,7 +42,7 @@ class Laser(Turtle):
 
 class Buff(Turtle):
     def __init__(self):
-        """ Create a buff with random position """
+        """ Create a buff at a random position """
         super().__init__(visible=False)
         self.color("yellow")
         self.speed(0)
