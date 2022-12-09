@@ -272,6 +272,8 @@ class Game:
         game_over_shadow.color("white")
         game_over_shadow.sety(-8)
         game_over_shadow.forward(8)
-        game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"), align="center")
-        game_over.write(f"GAME OVER", font=("Arial", 100, "bold"), align="center")
+        game_over_shadow.write(f"GAME OVER", font=("Arial", 100, "bold"),
+                               align="center")
+        game_over.write(f"GAME OVER", font=("Arial", 100, "bold"),
+                        align="center")
         sleep(3)
