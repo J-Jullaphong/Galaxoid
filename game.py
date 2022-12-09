@@ -240,7 +240,7 @@ class Game:
                 story_turtle.write(story[line+2], font=("Arial", 42, "normal"),
                                    align="center")
                 story_turtle.sety(50)
-                sleep(4)
+                sleep(3)
             except IndexError:
                 sleep(2)
                 story_turtle.clear()

@@ -35,7 +35,7 @@ def main(story):
     # Print out story
     for line in story:
         print(line)
-        sleep(2)
+        sleep(1)
     start_choice = input("Do you want to join this war? (Y/N): ").upper()
     while start_choice != "Y" and start_choice != "N":
         start_choice = input("Do you want to join this war? (Y/N): ").upper()
